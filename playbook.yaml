@@ -1,0 +1,19 @@
+- name: Ansible Playbook to Install and Setup Apache on Ubuntu
+  hosts: myservers
+  become: yes
+  tasks:
+    - name: Install latest version of Apache
+      apt: name=apache2 update_cache=yes state=latest
+
+
+      - name: Enable site
+      command: a2ensite {{ http_conf }}
+      notify: restart-apache
+
+
+
+       handlers:
+    - name: restart-apache
+      service:
+        name: apache2
+        state: restarted
